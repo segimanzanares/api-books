@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from books.models import Author
+from books.models import Author, Book
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,3 +11,8 @@ class AuthorSerializer(serializers.ModelSerializer):
         Create and return a new `Show` instance, given the validated data.
         """
         return Author.objects.create(**validated_data)
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ('id', 'title', 'author', 'publisher', 'published_date', 'description', 'language')
