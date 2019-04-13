@@ -22,7 +22,10 @@ from books import api_views
 # Create a router and register our viewsets with it.
 authorRouter = DefaultRouter()
 authorRouter.register('api/v1/authors', api_views.AuthorViewSet)
+bookRouter = DefaultRouter()
+bookRouter.register('api/v1/books', api_views.BookViewSet)
 
 urlpatterns = [
     path('', include(authorRouter.urls)),
+    path('', include(bookRouter.urls)),
 ]

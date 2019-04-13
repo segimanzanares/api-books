@@ -1,6 +1,6 @@
 
 from books.models import Author, Book
-from books.serializers import AuthorSerializer
+from books.serializers import AuthorSerializer, BookSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.utils import timezone
@@ -36,3 +36,14 @@ class AuthorViewSet(viewsets.ModelViewSet):
         author.deleted_at = timezone.now()
         author.save()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = Book.objects.filter(deleted_at=None)
+    serializer_class = BookSerializer
