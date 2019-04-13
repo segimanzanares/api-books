@@ -1,0 +1,6 @@
+*__pycache*
+/ve
+/node_modules
+/uploads
+*nbproject*
+error.log
