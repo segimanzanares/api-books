@@ -47,3 +47,12 @@ class BookViewSet(viewsets.ModelViewSet):
     """
     queryset = Book.objects.filter(deleted_at=None)
     serializer_class = BookSerializer
+
+    """
+    Soft delete a model instance.
+    """
+    def destroy(self, request, pk=None):
+        book = self.get_object()
+        book.deleted_at = timezone.now()
+        book.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
