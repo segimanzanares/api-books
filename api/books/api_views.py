@@ -2,7 +2,8 @@
 from books.models import Author, Book
 from books.serializers import AuthorSerializer
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from django.utils import timezone
 
 class AuthorViewSet(viewsets.ModelViewSet):
     """
@@ -26,3 +27,12 @@ class AuthorViewSet(viewsets.ModelViewSet):
                 instance.books = Book.objects.filter(author=instance)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+    """
+    Soft delete a model instance.
+    """
+    def destroy(self, request, pk=None):
+        author = self.get_object()
+        author.deleted_at = timezone.now()
+        author.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
